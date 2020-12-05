@@ -2,7 +2,9 @@ package tests;
 
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.logevents.SelenideLogger;
 import helper.UserModel;
+import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Condition.text;
@@ -14,15 +16,14 @@ import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
 public class GithubSelenideTests {
 
-
     UserModel userModel = new UserModel(getProperty("login_github"), getProperty("password_github"));
     String titleIssue = randomAlphabetic(10);
     String label = "bug";
-
     String dataForSearch = "/mednartem/allure-qaguru";
 
     @Test
     void createIssue() {
+        SelenideLogger.addListener("allure", new AllureSelenide());
         Configuration.clickViaJs = true;
 
         open("https://github.com/");
