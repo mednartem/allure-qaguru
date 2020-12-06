@@ -3,13 +3,13 @@ package tests;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
-import helper.UserModel;
+import config.UserModel;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.Test;
 import steps.BaseSteps;
 
 import static com.codeborne.selenide.Selenide.closeWebDriver;
-import static helper.GetPropFromFile.getProperty;
+import static config.GetPropFromFile.getProperty;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
 public class GithubAnnotationsTests {

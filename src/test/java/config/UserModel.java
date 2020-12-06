@@ -1,4 +1,4 @@
-package helper;
+package config;
 
 public class UserModel {
 

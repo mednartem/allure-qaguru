@@ -1,4 +1,4 @@
-package helper;
+package config;
 
 import java.io.FileInputStream;
 import java.io.IOException;
