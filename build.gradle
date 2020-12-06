@@ -24,8 +24,7 @@ test {
 }
 
 dependencies {
-    compile("com.codeborne:selenide:5.11.1")
-    compile("io.qameta.allure:allure-selenide:2.13.6")
+    compile("io.qameta.allure:allure-selenide:2.13.7")
     compile("org.aspectj:aspectjweaver:1.9.4")
     compile("org.junit.jupiter:junit-jupiter-api:5.7.0")
     compile("org.junit.jupiter:junit-jupiter-engine:5.7.0")
