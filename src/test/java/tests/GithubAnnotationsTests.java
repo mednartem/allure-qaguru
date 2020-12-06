@@ -8,26 +8,28 @@ import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.Test;
 import steps.BaseSteps;
 
+import static com.codeborne.selenide.Selenide.closeWebDriver;
 import static helper.GetPropFromFile.getProperty;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
 public class GithubAnnotationsTests {
 
+    BaseSteps steps = new BaseSteps();
     UserModel userModel = new UserModel(getProperty("login_github"), getProperty("password_github"));
-    String titleIssue = randomAlphabetic(10);
+    String issueTitle = randomAlphabetic(10);
     String issueType = "bug";
-    String dataForSearch = "/mednartem/allure-qaguru";
+    String repository = "/mednartem/allure-qaguru";
 
     @Test
     void createIssue() {
         SelenideLogger.addListener("allure", new AllureSelenide());
         Configuration.clickViaJs = true;
-        BaseSteps steps = new BaseSteps();
 
         steps.openMainPage();
         steps.authToGitHub(userModel.getUserName(), userModel.getPassword());
-        steps.openRepository(dataForSearch);
-        steps.crateIssue(titleIssue, issueType);
-        steps.assertCreatedIssue(titleIssue, userModel.getUserName(), issueType);
+        steps.openRepository(repository);
+        steps.crateIssue(issueTitle, issueType);
+        steps.assertCreatedIssue(issueTitle, userModel.getUserName(), issueType);
+        closeWebDriver();
     }
 }

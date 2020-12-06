@@ -18,8 +18,7 @@ public class BaseSteps {
     public void authToGitHub(String name, String password) {
         $(byText("Sign in")).click();
         $("#login_field").setValue(name);
-        $("#password").setValue(password);
-        $(byName("commit")).click();
+        $("#password").setValue(password).pressEnter();
     }
 
     @Step("Open repository {repositoryName}")

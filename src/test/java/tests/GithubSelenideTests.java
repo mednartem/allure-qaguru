@@ -9,17 +9,16 @@ import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.*;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
 import static helper.GetPropFromFile.getProperty;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
 
 public class GithubSelenideTests {
 
     UserModel userModel = new UserModel(getProperty("login_github"), getProperty("password_github"));
-    String titleIssue = randomAlphabetic(10);
-    String label = "bug";
-    String dataForSearch = "/mednartem/allure-qaguru";
+    String issueTitle = randomAlphabetic(10);
+    String issueType = "bug";
+    String repository = "/mednartem/allure-qaguru";
 
     @Test
     void createIssue() {
@@ -31,26 +30,25 @@ public class GithubSelenideTests {
         //auth
         $(byText("Sign in")).click();
         $("#login_field").setValue(userModel.getUserName());
-        $("#password").setValue(userModel.getPassword());
-        $(byName("commit")).click();
+        $("#password").setValue(userModel.getPassword()).pressEnter();
 
         //open repository
-        $(byName("q")).setValue(dataForSearch).pressEnter();
-        $(by("href", dataForSearch)).click();
-        $("[data-content=\"Issues\"]").click();
+        $(byName("q")).setValue(repository).pressEnter();
+        $(by("href", repository)).click();
+        $("[data-content='Issues']").click();
 
         //create issue
-        $("[data-hotkey=\"c\"]").click();
+        $("[data-hotkey='c']").click();
         $(".btn-link.muted-link").click();
         $("#labels-select-menu").$x(".//summary").click();
-        $(byText(label)).click();
-        $("#issue_title").setValue(titleIssue).click();
+        $(byText(issueType)).click();
+        $("#issue_title").setValue(issueTitle).click();
         $(byText("Submit new issue")).click();
 
         //assert created issue
-        $(".js-issue-title").shouldHave(text(titleIssue));
-        $(".assignee.link-gray-dark").shouldHave(text(userModel.getUserName()));
-        $("[id^='event']").find(".IssueLabel").shouldHave(text(label));
-
+        $(".js-issue-title").shouldHave(text(issueTitle));
+        $("[aria-label='Select assignees']").shouldHave(text(userModel.getUserName()));
+        $("[id^='event']").find(".IssueLabel").shouldHave(text(issueType));
+        closeWebDriver();
     }
 }
